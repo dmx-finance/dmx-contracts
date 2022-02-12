@@ -219,7 +219,7 @@ contract dMXMinter is Ownable, ReentrancyGuard {
     // Safe dMX transfer function, just in case if rounding error causes pool to not have enough dMXs.
     function safedMXTransfer(address _to, uint256 _amount)
         public
-        onlyOwner
+        onlyOperator
         nonReentrant
     {
         uint256 dmxBal = dmx.balanceOf(address(this));
@@ -259,7 +259,7 @@ contract dMXMinter is Ownable, ReentrancyGuard {
      */
     function recoverWrongTokens(address _tokenAddress, uint256 _tokenAmount)
         external
-        onlyOperator
+        onlyOwner
     {
         IBEP20(_tokenAddress).transfer(msg.sender, _tokenAmount);
         emit OperatorTokenRecovery(_tokenAddress, _tokenAmount);
